@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Counter</title>
+  <style>
+    body {
+      background-color: #000;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .counter-box {
+      max-width: 500px;
+      margin: 1.5em auto;
+      padding: 1.5em;
+      text-align: center;
+      border-radius: 16px;
+      background: #000000;
+      box-shadow: 0 0 25px rgba(0,204,255,.6), inset 0 0 12px rgba(0,0,0,.9);
+    }
+    .counter-title {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      margin-bottom: 0.8em;
+      color: #00ccff;
+      text-shadow: 0 0 6px #00ccff, 0 0 12px #00ccff;
+    }
+    .counter-value {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: bold;
+      letter-spacing: 4px;
+      color: #00ccff;
+      text-shadow: 0 0 12px #00ccff, 0 0 24px #00ccff, 0 0 36px #00ccff;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter-box">
+    <div class="counter-title">🌐 Jumlah Pengunjung</div>
+    <div id="visitor-count" class="counter-value">—</div>
+  </div>
+
+  <script>
+    const namespace = "ppd-github"; // ubah ikut unik projek anda
+    const key = "homepage";
+
+    async function updateCounter() {
+      try {
+        const url = `https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById("visitor-count").textContent = data.value.toLocaleString();
+      } catch (e) {
+        document.getElementById("visitor-count").textContent = "—";
+      }
+    }
+    updateCounter();
+  </script>
+</body>
+</html>
